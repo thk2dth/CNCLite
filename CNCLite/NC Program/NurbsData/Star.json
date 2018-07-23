@@ -1,0 +1,11 @@
+{
+	"Name": "Star",
+	"Degree": 2,
+	"Dimension": 2,
+	"NumberControlPoints": 11,
+	"IsHomogeneous": false,
+	"ControlPoints": [80, 50, 0, 40, 30, 80, 130, 120, 160, 110, 80, 
+		120, 80, 80, 40, 0, 30, 0, 40, 80, 80, 120],
+	"KnotVector": [0, 0, 0, 0.111, 0.222, 0.333, 0.444, 
+		0.555, 0.666, 0.777, 0.888, 1, 1, 1]
+}

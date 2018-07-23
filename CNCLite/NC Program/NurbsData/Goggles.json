@@ -1,0 +1,11 @@
+{
+	"Name": "Goggles",
+	"Degree": 2,
+	"Dimension": 2,
+	"NumberControlPoints": 9,
+	"IsHomogeneous": false,
+	"ControlPoints": [0, 10, 40, 70, 80, 70, 40, 10, 0, 
+		0, -40, -10, -40, 0, 10, 20, 10, 0],
+	"KnotVector": [0,0,0,0.15,0.3,0.45,0.6,0.75,0.9,
+		1,1, 1]
+}

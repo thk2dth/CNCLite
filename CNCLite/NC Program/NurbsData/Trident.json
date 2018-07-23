@@ -1,0 +1,10 @@
+{
+	"Name": "Trident",
+	"Degree": 2,
+	"Dimension": 2,
+	"NumberControlPoints": 7,
+	"IsHomogeneous": false,
+	"ControlPoints": [10, 20, 12, 10, 8, 0, 10, 
+		0, 20, 8, 20, 8, 20, 0],
+	"KnotVector": [0, 0, 0, 0.2, 0.4, 0.6, 0.8, 1, 1, 1]
+}

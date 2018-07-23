@@ -1,0 +1,11 @@
+{
+	"Name": "Circle",
+	"Degree": 2,
+	"Dimension": 2,
+	"NumberControlPoints": 7,
+	"IsHomogeneous": true,
+	"ControlPoints": [0, 0, 100, 100, 100, 0, 0, 
+		0, 50, 50, 0, -50, -50, 0, 
+		1, 0.5, 0.5, 1, 0.5, 0.5, 1],
+	"KnotVector": [0, 0, 0, 0.25, 0.5, 0.5, 0.75, 1, 1, 1]
+}
