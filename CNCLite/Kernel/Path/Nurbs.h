@@ -42,6 +42,10 @@ public:
     double calculateNextParameter(double ds, double us, const INTERPOLATION_METHOD method) const;
     double calculateCurvature(double u) const;
 
+    /// Knot insertion algorithm.
+    /// Refer the Nurbs Book - Algorithm 5.1.
+    void knotVectorInsert(double u, uint8_t r = 1); // insert u for n times.
+
 private:
     void calculateBeginPoint();
     void calculateEndPoint();

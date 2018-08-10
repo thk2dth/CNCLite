@@ -357,6 +357,54 @@ double Nurbs::calculateCurvature(double u) const
     return calculateCurvatureByDerivatives(u);
 }
 
+void Nurbs::knotVectorInsert(double u, uint8_t r)
+{
+    if (r <= 0 || r >= degree + 1)
+        return;
+    uint8_t s = findMultiplicity(u, knotVector);
+    uint32_t k = findSpan(u);
+    if (r+s > degree)
+    {
+        std::cout << "The sum of multiplicity and insert time is greater than the degree.\n"
+                     "Insert the given parameter degree-multiplicity instead." << std::endl;
+        r = degree - s;
+    }
+    uint32_t numberKnotVector = numberControlPoints + degree + 1;
+    std::vector<double> knotVec(numberKnotVector+r, 0.0);
+    std::vector<VectorXd> ctrlPts(numberControlPoints+r, VectorXd::Zero(dimension) );
+    uint32_t i, j, L;
+    double alpha;
+    /// Insert the new knots.
+    for (i=0; i<=k; i++) knotVec[i] = knotVector[i];
+    for (i=1; i<=r; i++) knotVec[k+i] = u;
+    for (i=k+1; i<numberKnotVector; i++) knotVec[i+r] = knotVector[i];
+    /// The unchanged control points.
+    for (i=0; i<=k-degree; i++) ctrlPts[i] = controlPoints[i];
+    for (i=k-s; i<numberControlPoints; i++) ctrlPts[i+r] = controlPoints[i];
+    /// Temporary control points
+    std::vector<VectorXd> ctrlTemp(degree+1, VectorXd::Zero(dimension) );
+    for (i=0; i<=degree-s; i++) ctrlTemp[i] = controlPoints[k-degree+i];
+    /// Insert the kont r times.
+    for (j=1; j<=r; j++)
+    {
+        L = k - degree + j;
+        for (i=0; i<=degree-j-s; i++)
+        {
+            alpha = (u-knotVector[L+i]) / (knotVector[i+k+1]-knotVector[L+i]);
+            ctrlTemp[i] = ctrlTemp[i+1]*alpha + ctrlTemp[i]*(1.0-alpha);
+        }
+        ctrlPts[L] = ctrlTemp[0];
+        ctrlPts[k+r-j-s] = ctrlTemp[degree-j-s];
+    }
+    /// Insert the remaining r control points
+    for (i=L+1; i<k-s; i++) ctrlPts[i] = ctrlTemp[i-L];
+    /// Re-initialize the curve
+    controlPoints = ctrlPts;
+    knotVector = knotVec;
+    /// Numbers of control points and knots are both increased by r.
+    numberControlPoints += r;
+}
+
 double Nurbs::calculateLengthInterval(double us, double ue) const
 {
     double len = 0.0;
@@ -567,12 +615,12 @@ VectorXd Nurbs::basisFunction(double u, unsigned int index, unsigned int deg,
     VectorXd basisVecAll = VectorXd::Zero(knotVec.size()-deg-1);
     double saved, temp;
     basisVecNonZero(0) = 1.0;
-    for (unsigned int j=0; j<=deg; j++)
+    for (int32_t j=1; j<=deg; j++)
     {
-        left(j) =u - knotVec.at(index+1-j);
+        left(j) = u - knotVec.at(index+1-j);
         right(j) = knotVec.at(index+j) - u;
         saved = 0.0;
-        for (unsigned int r=0; r<j; r++)
+        for (int32_t r=0; r<j; r++)
         {
             temp = basisVecNonZero(r) / (right(r+1) + left(j-r) );
             basisVecNonZero(r) = saved + right(r+1) * temp;
@@ -580,7 +628,7 @@ VectorXd Nurbs::basisFunction(double u, unsigned int index, unsigned int deg,
         }
         basisVecNonZero(j) = saved;
     }
-    for (unsigned int j=0; j<=deg; j++)
+    for (int32_t j=0; j<=deg; j++)
         basisVecAll(index-deg+j) = basisVecNonZero(j);
     return basisVecAll;
 }

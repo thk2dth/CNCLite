@@ -83,7 +83,7 @@ void BsplineAngularBlend::initializeFromPoints(const Vector3d &p0, const Vector3
     double cce2 = cos(ce) * cos(ce);
     double para2_ori = k1_ori * k1_ori - k2_ori * cce2; // Eq. (15).
     double d2_geo_up, d2_blend_up;
-    d2_geo_up = std::min(len1, len2) * (1 - mr) * 0.5; // Eq. (9).
+    d2_geo_up = std::min(len1, len2) * (1 - mr) / (2*(1+cRatio) ); // Eq. (9).
     if (fabs(para2_ori) <= EPS_NUM)
     {
         /// The parameter for the second order item is 0.

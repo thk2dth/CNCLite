@@ -119,15 +119,15 @@ double Path::calculateNextParameterSecondTaylor(double ds, double us) const
     double len1 = rst.at(1).norm();
     if(0 == len1 && ds > 0)
     {
-        std::cerr << "The arc increasement is non-zero, "
-                     "while the first derivative is zero." << std::endl;
+        /*std::cerr << "The arc increasement is non-zero, "
+                     "while the first derivative is zero." << std::endl;*/
         return us;
     }
     double ut = us + ds / len1 - 0.5 * rst.at(1).dot(rst.at(2) ) * ds * ds / std::pow(len1, 4);
     if(ut < 0 )
     {
-        std::cerr << "In second Taylor expansion method, the obtained parameter is negtive.\n "
-                     "Thus the first order Taylor expansion method is utlized temporarily." << std::endl;
+        /*std::cerr << "In second Taylor expansion method, the obtained parameter is negtive.\n "
+                     "Thus the first order Taylor expansion method is utlized temporarily." << std::endl;*/
         ut = us + ds / len1;
     }
     return ut >= endParameter ? endParameter : ut;
@@ -168,8 +168,8 @@ double Path::calculateNextParameterSecondRuKuCompensation(double ds, double us) 
 {
     if(us >= endParameter)
     {
-        std::cerr<< "In second order Runge-Kutta and compensation method, the initial parameter is greater than "
-                  "endparameter.\nThus the endparameter is returned." << std::endl;
+        /*std::cerr<< "In second order Runge-Kutta and compensation method, the initial parameter is greater than "
+                  "endparameter.\nThus the endparameter is returned." << std::endl;*/
         return endParameter;
     }
     VectorXd vec0 = calculateDer1(us);
@@ -204,14 +204,14 @@ double Path::calculateNextParameterSecondRuKuCompensation(double ds, double us) 
     double ue = du + u_temp;
     if(ue >= endParameter)
     {
-        std::cerr << "In second order Runge-Kutta and compensation method, the obtained parameter is greater than "
-                     "endparameter.\nThus the endparameter is returned." << std::endl;
+        /*std::cerr << "In second order Runge-Kutta and compensation method, the obtained parameter is greater than "
+                     "endparameter.\nThus the endparameter is returned." << std::endl;*/
         return endParameter;
     }
     else if(ue <= beginParameter)
     {
-        std::cerr << "In second order Runge-Kutta and compensation method, the obtained parameter is less than "
-                     "beginParameter.\nThus the beginParameter is returned." << std::endl;
+        /*std::cerr << "In second order Runge-Kutta and compensation method, the obtained parameter is less than "
+                     "beginParameter.\nThus the beginParameter is returned." << std::endl;*/
         return beginParameter;
     }
     else

@@ -163,7 +163,8 @@ bool Trajectory::plan()
                 {
                     high = vf;
                 }
-            }while (fabs(sa + sd - length) > EPS_CAD);
+            }while (fabs(sa + sd - length) > EPS_CAD
+                    && (high-low) > EPS_CAD);
             isPlanned = true;
             trajType = ACC_DEC;
             ta = law[0]->getDuration();

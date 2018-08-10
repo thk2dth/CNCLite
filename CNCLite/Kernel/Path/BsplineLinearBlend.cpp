@@ -94,7 +94,7 @@ void BsplineLinearBlend::initializeFromPoints(const VectorXd &p0, const VectorXd
     /// Maximum transition length determined by the transition error.
     double d2_blend_up = 0.0;
     /// Maximum transition length determined by the two line lengths.
-    double d2_geo_up = std::min(len1, len2) * (1 - mr) * 0.5; // Eq. (9).
+    double d2_geo_up = std::min(len1, len2) * (1 - mr) / (2*(1+cRatio) ); // Eq. (9).
     double beta = 0.5 * acos(vec1.dot(vec2) );
     d2_blend_up = 2 * blendError / sin(beta); // Eq. (9).
     d2 = std::min(d2_blend_up, d2_geo_up);
