@@ -227,7 +227,7 @@ double SnapBounded::snapAcc(double t) const
 double SnapBounded::lawVV(double vs, double ve)
 {
     type = POLYNOMIAL;
-    if (fabs(vs-ve) == 0 && kinematicConstraint(1) == 0)
+    if (kinematicConstraint(1) == 0)
     {
         timeParameter = VectorXd::Zero(order-1);
         duration = 0.0;

@@ -108,6 +108,22 @@ bool Trajectory::plan()
     law[2]->initialize(kinematicConstraint, false);
     double s0; // minimum distance required to accelerate from vs to ve.
     bool isEndGreatBegin = (vs <= ve);
+    if (kinematicConstraint(1) == 0.0)
+    {
+        /// Constant velocity
+        vf = fmin(vs, ve);
+        law[1]->lawCruise(vf, length);
+        trajType = CRU;
+        tc = law[1]->getDuration();
+        sc = length;
+        duration = tc;
+        if (isEndGreatBegin)
+            ve = vf;
+        else
+            vs = vf;
+        isPlanned = true;
+        return true;
+    }
     if (vs == ve)
         s0 = 0.0;
     else if (vs < ve)
@@ -145,6 +161,7 @@ bool Trajectory::plan()
         double high = vm;
         sa = law[0]->lawVV(vs, vm);
         sd = law[2]->lawVV(vm, ve);
+
         if (length < sa + sd)
         {
             /// Binary search.

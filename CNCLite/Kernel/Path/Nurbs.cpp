@@ -214,17 +214,17 @@ bool Nurbs::toJsonFile(const std::string &fileName) const
 
 VectorXd Nurbs::calculatePoint(double u) const
 {
-    if (fabs(u-endParameter) <= EPS_NUM)
+    /*if (fabs(u-endParameter) <= EPS_NUM)
         u = endParameter;
     if (fabs(u-beginParameter) <= EPS_NUM)
-        u = beginParameter;
-    if (u - beginParameter < -EPS_NUM)
+        u = beginParameter;*/
+    if (u < beginParameter)
     {
         std::cout << "The given parameter less than the begin paramter. "
                      "The begin parameter is used."<<std::endl;
         u = beginParameter;
     }
-    if (u - endParameter > EPS_NUM)
+    if (u > endParameter)
     {
         std::cout<<"The given parameter is great than the end parameter. "
                    "The end parameter is used."<<std::endl;

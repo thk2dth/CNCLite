@@ -16,7 +16,7 @@ class BsplineApproximation : public Nurbs
 public:
     BsplineApproximation();
     BsplineApproximation(const std::vector<Eigen::Vector3d> &pts, uint8_t deg = 3, double ce = 0.1,
-                         double fer = 0.5, double mer = 0.5);
+                         double fer = 0.5);
     ~BsplineApproximation();
 
 public:
@@ -24,7 +24,7 @@ public:
     Eigen::VectorXd approximatePIA(const std::vector<Eigen::Vector3d> &pts, uint8_t deg = 3,
                                        double fe = 1e-4);
     void approximateModification(const std::vector<Eigen::Vector3d> &pts, uint8_t deg = 3, double ce = 0.1,
-                                 double fer = 0.5, double mer = 0.5);
+                                 double fer = 0.5);
 
     // 在节点插入中，保证每个[u(i), u(i+1))区间总有4个节点矢量参数，
     // 因此修改时，不需要另外增加控制点和节点矢量
@@ -32,7 +32,7 @@ private:
     // 注意这个函数中的ce为总弓高误差
     // 修正后的控制点和节点矢量直接存储于ctrlPtsAfterMod与knotVecAfterMod中
     void localModification(std::vector<Eigen::Vector3d> &ctrlPtsAfterMod, std::vector<double> &knotVecAfterMod,
-                           double me, double mer = 0.5);
+                           double me);
     // Calculate lambda_0 and lambda_1
     void calculateLambda(double c1, double c3, double c4, double du, double em,
                          double &lambda0, double &lambda1) const;

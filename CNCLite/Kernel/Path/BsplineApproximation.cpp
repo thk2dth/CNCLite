@@ -11,9 +11,9 @@ BsplineApproximation::BsplineApproximation()
 }
 
 BsplineApproximation::BsplineApproximation(const std::vector<Vector3d> &pts, uint8_t deg,
-                                           double ce, double fer, double mer)
+                                           double ce, double fer)
 {
-    approximateModification(pts, deg, ce, fer, mer);
+    approximateModification(pts, deg, ce, fer);
 }
 
 BsplineApproximation::~BsplineApproximation()
@@ -22,7 +22,7 @@ BsplineApproximation::~BsplineApproximation()
 }
 
 VectorXd BsplineApproximation::approximatePIA(const std::vector<Eigen::Vector3d> &pts,
-                                                         uint8_t deg, double fe)
+                                              uint8_t deg, double fe)
 {
     degree = deg;
     fittingError = fe;
@@ -65,7 +65,7 @@ VectorXd BsplineApproximation::approximatePIA(const std::vector<Eigen::Vector3d>
 }
 
 void BsplineApproximation::approximateModification(const std::vector<Vector3d> &pts,
-                                                   uint8_t deg, double ce, double fer, double mer)
+                                                   uint8_t deg, double ce, double fer)
 {
     chordError = ce;
     chordErrorRatio = 1 - fer;
@@ -204,7 +204,7 @@ void BsplineApproximation::approximateModification(const std::vector<Vector3d> &
         // 有控制点不满足误差要求，则调整该区间的控制点
         if(0 != flagVec[i])
         {
-            localModification(ctrlPtsTemp, knotVecTemp, ce*(1-fer), mer); /// 保证误差总量为弓高误差
+            localModification(ctrlPtsTemp, knotVecTemp, ce*(1-fer) ); /// 保证误差总量为弓高误差
             // 更新局部调整前的控制点和节点矢量
             for(j=1; j<7; j++)
             {
@@ -221,10 +221,10 @@ void BsplineApproximation::approximateModification(const std::vector<Vector3d> &
 // 调整控制点。
 // 注意这个函数中的ce为总弓高误差
 void BsplineApproximation::localModification(std::vector<Vector3d> &ctrlPtsAfterMod,
-                                             std::vector<double> &knotVecAfterMod, double me,
-                                             double mer)
+                                             std::vector<double> &knotVecAfterMod, double me)
 {
-    std::cout << "The curve is locally modified based on the strong convex hull property." << std::endl;
+    std::cout << "The curve (" << knotVecAfterMod.front() <<", " << knotVecAfterMod.back()
+              << ") is locally modified based on the strong convex hull property." << std::endl;
     if (ctrlPtsAfterMod.size() !=8 || knotVecAfterMod.size() != 6)
     {
         std::cout << "The number of control points and of knot vector is not 8 or 6." << std::endl;
