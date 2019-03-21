@@ -35,7 +35,7 @@ public:
     void initialize(double vs, double ve, const Eigen::VectorXd &kineConst, Path *path,
                     TimeLaw::LawType type = TimeLaw::LawType::POLYNOMIAL,double us = 0.0, double ue = 1.0);
     /// Return true if the boundary velocity is decreased.
-    virtual bool plan(); // Use binary search method to plan the trajetory.
+    virtual bool plan(); // Use binary search method to plan the trajectory.
     /// Synchronize the trajectory with a specifed duration.
     /// Return true if the boundary velocity is decreased during synchronization.
     virtual bool synchronize(double tg);
@@ -94,7 +94,7 @@ protected:
     double ta, tc, td; // durations during ACC, CRU and DEC phases.
     Eigen::VectorXd kinematicConstraint;
     TrajType trajType; // Trajectory type.
-    /// Time law. To facilitate the sychronization process, the trajectory always has three time laws.
+    /// Time law. To facilitate the synchronization process, the trajectory always has three time laws.
     std::vector<TimeLaw* > law;
     bool isPlanned;
     TimeLaw::LawType lawType;
