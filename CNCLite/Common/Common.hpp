@@ -10,10 +10,9 @@ namespace CNCLite{
 /// numeric precision
 #define EPS_NUM  1.0e-10
 #define PI  3.141592653589793 // pi
-/// Since DEG2RAD and RAD2DEG are macros, they cannot
-/// be used as DEG2RAD(x+y), RAD2DEG(x+y), etc.
-#define DEG2RAD(x) ( x*3.141592653589793/180.0 )
-#define RAD2DEG(x) ( x*180.0/3.141592653589793 )
+/// degree <==> radius
+#define DEG2RAD(x) ( (x)*3.141592653589793/180.0 )
+#define RAD2DEG(x) ( (x)*180.0/3.141592653589793 )
 
 /// linear interpolation.
 template<typename T>
