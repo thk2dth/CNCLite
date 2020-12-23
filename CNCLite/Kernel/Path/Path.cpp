@@ -323,8 +323,10 @@ double Path::calculateThresholdCurvature(double vm, double am, double jm,
 double Path::calculateTraverseVelocityR3(double cur, double vm, double am,
                                                      double jm, double ce, double ts)
 {
-    if (cur <= 0)
+    if (cur < 0.0)
         return 0.0;
+    if (cur == 0.0)
+        return vm;
     double v1, v2; // velocities determined by chord error and kinematic constraints.
     double rou = 1 / cur;
     if (rou > 0.5 * ce)
@@ -349,7 +351,7 @@ double Path::calculateTraverseVelocityS2(double cur, double wm,
                                                       double am, double bm,
                                                       double ce, double ts)
 {
-    if (cur <= 0)
+    if (cur < 0.0)
         return 0.0;
     if (cur <= 1)
         return wm; /// If the curvature is less than 1, return the maximum velocity.
